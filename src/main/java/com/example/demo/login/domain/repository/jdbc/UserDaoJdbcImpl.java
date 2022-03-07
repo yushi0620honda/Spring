@@ -1,6 +1,9 @@
 package com.example.demo.login.domain.repository.jdbc;
 
+import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -16,8 +19,30 @@ public class UserDaoJdbcImpl implements UserDao {
 	
 	@Override
 	public int count() throws DataAccessException {
+		int count = jdbc.queryForObject("SELECT COUNT(*) FROM m_user", Integer.class);
 		
-		return 0;
+		return count;
+	}
+	
+	@Override
+	public int insertOne(User user) throws DataAccessException {
+		int rowNumber = jdbc.update("INSERT INTO m_user(user_id,"
+		+ " password,"
+		+ " user_name,"
+		+ " birthday,"
+		+ " age,"
+		+ " marriage,"
+		+ " role)"
+		+ " VALUES(?, ?, ?, ?, ?, ?, ?)"
+		, user.getUserId()
+		, user.getPassword()
+		, user.getUserName()
+		, user.getBirthday()
+		, user.getAge()
+		, user.isMarriage()
+		, user.getRole());
+		
+		return rowNumber;
 	}
 	
 	@Override
@@ -28,8 +53,23 @@ public class UserDaoJdbcImpl implements UserDao {
 	
 	@Override
 	public List<User> selectMany() throws DataAccessException {
+		List<Map<String, Object>> getList = jdbc.queryForList("SELECT * FROM m_user");
+		List<User> userList = new ArrayList<>();
 		
-		return null;
+		for(Map<String, Object> map: getList) {
+			User user = new User();
+			user.setUserId((String)map.get("user_id"));
+			user.setPassword((String)map.get("password"));
+			user.setUserName((String)map.get("user_name"));
+			user.setBirthday((Date)map.get("birthday"));
+			user.setAge((Integer)map.get("age"));
+			user.setMarriage((Boolean)map.get("marriage"));
+			user.setRole((String)map.get("role"));
+			
+			userList.add(user);
+		}
+		
+		return userList;
 	}
 	
 	@Override
@@ -44,20 +84,8 @@ public class UserDaoJdbcImpl implements UserDao {
 		return 0;
 	}
 	
-	//@Override//
+	@Override
 	public void userCsvOut() throws DataAccessException {
-		
-	}
-
-	@Override
-	public int insertOne(User user) throws DataAccessException {
-		// TODO 自動生成されたメソッド・スタブ
-		return 0;
-	}
-
-	@Override
-	public void userCsvout() throws DataAccessException {
-		// TODO 自動生成されたメソッド・スタブ
 		
 	}
 }
