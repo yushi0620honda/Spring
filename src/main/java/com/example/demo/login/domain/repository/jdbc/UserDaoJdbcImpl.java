@@ -84,13 +84,29 @@ public class UserDaoJdbcImpl implements UserDao {
 	@Override
 	public int updateOne(User user) throws DataAccessException {
 		
-		return 0;
+		int rowNumber = jdbc.update("UPDATE M_USER"
+				+ " SET"
+				+ " password = ?,"
+				+ " user_name = ?,"
+				+ " birthday = ?,"
+				+ " age = ?,"
+				+ " marriage = ?"
+				+ " WHERE user_id = ?"
+				, user.getPassword()
+				, user.getUserName()
+				, user.getBirthday()
+				, user.getAge()
+				, user.isMarriage()
+				, user.getUserId());
+				
+				return rowNumber;
 	}
 	
 	@Override
 	public int deleteOne(String userId) throws DataAccessException {
+		int rowNumber = jdbc.update("DELETE FROM m_user WHERE user_id = ?", userId);
 		
-		return 0;
+		return rowNumber;
 	}
 	
 	@Override
