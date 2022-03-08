@@ -19,7 +19,6 @@ public class UserService {
 		
 		if(rowNumber > 0) {
 			result = true;
-			
 		}
 		
 		return result;
@@ -33,5 +32,10 @@ public class UserService {
 	public List<User> selectMany() {
 		
 		return dao.selectMany();
+	}
+	
+	public User selectOne(String userId) {
+		
+		return dao.selectOne(userId);
 	}
 }
