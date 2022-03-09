@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 import com.example.demo.login.domain.model.User;
 import com.example.demo.login.domain.repository.UserDao;
 
-@Repository
+@Repository("UserDaoJdbcImpl")
 public class UserDaoJdbcImpl implements UserDao {
 	@Autowired
 	JdbcTemplate jdbc;
@@ -49,6 +49,7 @@ public class UserDaoJdbcImpl implements UserDao {
 	public User selectOne(String userId) throws DataAccessException {
 		Map<String, Object> map = jdbc.queryForMap("SELECT * FROM m_user" + " WHERE user_id = ?", userId);
 		User user = new User();
+		
 		user.setUserId((String)map.get("user_id"));
 		user.setPassword((String)map.get("password"));
 		user.setUserName((String)map.get("user_name"));
@@ -67,6 +68,7 @@ public class UserDaoJdbcImpl implements UserDao {
 		
 		for(Map<String, Object> map: getList) {
 			User user = new User();
+			
 			user.setUserId((String)map.get("user_id"));
 			user.setPassword((String)map.get("password"));
 			user.setUserName((String)map.get("user_name"));
@@ -111,6 +113,8 @@ public class UserDaoJdbcImpl implements UserDao {
 	
 	@Override
 	public void userCsvOut() throws DataAccessException {
-		
+		String sql = "SELECT * FROM m_user";
+		UserRowCallbackHandler handler = new UserRowCallbackHandler();
+		jdbc.query(sql, handler);
 	}
 }
