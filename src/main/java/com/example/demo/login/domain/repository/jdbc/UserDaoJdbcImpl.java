@@ -47,7 +47,8 @@ public class UserDaoJdbcImpl implements UserDao {
 	
 	@Override
 	public User selectOne(String userId) throws DataAccessException {
-		Map<String, Object> map = jdbc.queryForMap("SELECT * FROM m_user" + " WHERE user_id = ?", userId);
+		Map<String, Object> map = jdbc.queryForMap("SELECT * FROM m_user"
+				+ " WHERE user_id = ?", userId);
 		User user = new User();
 		
 		user.setUserId((String)map.get("user_id"));
@@ -66,7 +67,7 @@ public class UserDaoJdbcImpl implements UserDao {
 		List<Map<String, Object>> getList = jdbc.queryForList("SELECT * FROM m_user");
 		List<User> userList = new ArrayList<>();
 		
-		for(Map<String, Object> map: getList) {
+		for(Map<String, Object> map : getList) {
 			User user = new User();
 			
 			user.setUserId((String)map.get("user_id"));
@@ -102,7 +103,8 @@ public class UserDaoJdbcImpl implements UserDao {
 				, user.getUserId());
 				
 		//if(rowNumber > 0) {
-			//throw new DataAccessException("トランザクションテスト"){};
+			//throw new DataAccessException("トランザクションテスト"){
+			//};
 		//}
 		
 		return rowNumber;

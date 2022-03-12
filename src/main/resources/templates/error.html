@@ -5,7 +5,7 @@
 	<title>Error</title>
 </head>
 <body>
-	<h1 th:text="${status} +''+ ${error}"></h1>
+	<h1 th:text="${status} + ' ' + ${error}"></h1>
 	<p th:text="${message}"></p>
 	<p>ログイン画面に戻ってください</p>
 	<form method="post" th:action="@{/logout}">

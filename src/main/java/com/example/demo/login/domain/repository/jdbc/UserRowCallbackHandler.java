@@ -30,7 +30,7 @@ public class UserRowCallbackHandler implements RowCallbackHandler {
 				bw.write(str);
 				bw.newLine();
 				
-			}while (rs.next());
+			} while(rs.next());
 			bw.flush();
 			bw.close();
 			

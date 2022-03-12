@@ -102,12 +102,12 @@ public class UserDaoNamedJdbcImpl implements UserDao {
 	public int updateOne(User user) {
 		String sql = "UPDATE M_USER"
 				+ " SET"
-				+" password = :password,"
-				+" user_name = :userName,"
-				+" birthday = :birthday,"
-				+" age = :age,"
-				+" marriage = :marriage"
-				+" WHERE user_id = :userId";
+				+ " password = :password,"
+				+ " user_name = :userName,"
+				+ " birthday = :birthday,"
+				+ " age = :age,"
+				+ " marriage = :marriage"
+				+ " WHERE user_id = :userId";
 				
 		SqlParameterSource params = new MapSqlParameterSource()
 				.addValue("userId", user.getUserId())
@@ -115,8 +115,7 @@ public class UserDaoNamedJdbcImpl implements UserDao {
 				.addValue("userName", user.getUserName())
 				.addValue("birthday", user.getBirthday())
 				.addValue("age", user.getAge())
-				.addValue("marriage", user.isMarriage())
-				.addValue("role", user.getRole());
+				.addValue("marriage", user.isMarriage());
 		
 		return jdbc.update(sql, params);
 	}

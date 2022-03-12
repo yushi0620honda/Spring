@@ -29,6 +29,7 @@ public class HomeController {
 		Map<String, String> radio = new LinkedHashMap<>();
 		radio.put("既婚", "true");
 		radio.put("未婚", "false");
+		
 		return radio;
 	}
 	
@@ -54,7 +55,9 @@ public class HomeController {
 	}
 	
 	@GetMapping("/userDetail/{id:.+}")
-	public String getUserDetail(@ModelAttribute SignupForm form, Model model, @PathVariable("id")String userId) {
+	public String getUserDetail(@ModelAttribute SignupForm form,
+			Model model,
+			@PathVariable("id")String userId) {
 		System.out.println("userId = "+ userId);
 		
 		model.addAttribute("contents", "login/userDetail :: userDetail_contents");
@@ -78,8 +81,9 @@ public class HomeController {
 		return "login/homeLayout";
 	}
 	
-	@PostMapping(value ="/userDetail", params ="update")
-	public String postUserDetailUpdate(@ModelAttribute SignupForm form, Model model) {
+	@PostMapping(value = "/userDetail", params = "update")
+	public String postUserDetailUpdate(@ModelAttribute SignupForm form,
+			Model model) {
 		System.out.println("更新ボタンの処理");
 		
 		User user = new User();
@@ -108,8 +112,9 @@ public class HomeController {
 		return getUserList(model);
 	}
 	
-	@PostMapping(value ="/userDetail", params ="delete")
-	public String postUserDetailDelete(@ModelAttribute SignupForm form, Model model) {
+	@PostMapping(value = "/userDetail", params = "delete")
+	public String postUserDetailDelete(@ModelAttribute SignupForm form,
+			Model model) {
 		System.out.println("削除ボタンの処理");
 		
 		boolean result = userService.deleteOne(form.getUserId());
