@@ -12,6 +12,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.util.matcher.RequestMatcher;
 
 @Configuration
 @EnableWebSecurity
@@ -55,6 +56,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/css/**").permitAll()
 				.antMatchers("/login").permitAll()
 				.antMatchers("/signup").permitAll()
+				.antMatchers("/rest/**").permitAll()
 				.antMatchers("/admin").hasAuthority("ROLE_ADMIN")
 				.anyRequest().authenticated();
 		
@@ -73,7 +75,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.logoutUrl("/logout")
 				.logoutSuccessUrl("/login");
 		
-		//http.csrf().disable();
+		RequestMatcher csrfMatcher = new RestMatcher("/rest/**");
+		http.csrf().requireCsrfProtectionMatcher(csrfMatcher);
 	}
 	
 	@Override
